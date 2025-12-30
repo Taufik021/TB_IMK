@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>RIWAYAT STUDI</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif
+}
+body{
+    margin:0;
+    height:100vh
+}
+
+/* ===== LOGIN ===== */
+#login{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(to bottom,rgb(58,123,213),rgb(0,210,255));
+}
+.login-box{
+    width:450px;
+    height:350px;
+}
+.login-box h1{
+    text-align:center;
+    color:white;
+    margin-top:30px;
+}
+.login-box label{
+    color:white;
+    margin-left:90px;
+    display:block;
+    margin-top:20px;
+}
+.login-box input{
+    width:250px;
+    height:35px;
+    margin-left:90px;
+    margin-top:5px;
+    padding:5px 10px;
+}
+.login-box button{
+    width:150px;
+    height:40px;
+    margin-left:150px;
+    margin-top:30px;
+    background:rgb(0,204,153);
+    border:none;
+    border-radius:6px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+.login-box button:hover{
+    background:rgb(0,180,140);
+    transform:translateY(-2px);
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ===== DASHBOARD ===== */
+#dashboard{
+    display:none;
+    height:100vh
+}
+.container{
+    display:flex;
+    height:100%
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+    width:230px;
+    background:rgb(58,123,213);
+    color:white;
+    display:flex;
+    flex-direction:column;
+}
+.user{
+    padding:20px;
+    text-align:center;
+    font-weight:bold;
+    position:relative;
+}
+.user-profile{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+}
+.user-avatar{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    cursor:pointer;
+    border:3px solid rgba(255,255,255,0.3);
+    transition:all 0.3s ease;
+    overflow:hidden;
+}
+.user-avatar:hover{
+    border-color:white;
+    box-shadow:0 0 10px rgba(255,255,255,0.3);
+}
+.user-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.user-name{
+    color:white;
+    font-size:13px;
+    word-break:break-word;
+}
+#profilePhotoInput{
+    display:none;
+}
+.menu{
+    flex:1;
+    padding:20px 15px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.menu button{
+    width:100%;
+    margin-bottom:15px;
+    padding:14px;
+    background:rgb(0,204,153);
+    border:none;
+    border-radius:6px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:14px;
+    transition:all 0.3s ease;
+}
+.menu button:hover{
+    background:rgb(0,180,140);
+    transform:translateY(-2px);
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+.logout{
+    padding:15px
+}
+.logout button{
+    width:100%;
+    padding:12px;
+    background:rgb(220,53,69);
+    border:none;
+    border-radius:6px;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:all 0.3s ease;
+}
+.logout button:hover{
+    background:rgb(200,40,50);
+    transform:translateY(-2px);
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* ===== CONTENT ===== */
+.content{
+    flex:1;
+    background:white
+}
+.header{
+    background:rgb(82, 175, 196);
+    color:white;
+    text-align:center;
+    padding:15px;
+    font-size:20px;
+    font-weight:bold;
+}
+.page{
+    display:none;
+    padding:20px
+}
+.page.active{
+    display:block
+}
+
+/* In-page navigation (inside each page) */
+.page-nav{
+    display:flex;
+    gap:8px;
+    margin:12px 0 18px 0;
+    flex-wrap:wrap;
+    align-items:center;
+}
+.page-nav button{
+    padding:8px 12px;
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    border-radius:6px;
+    font-size:13px;
+    cursor:pointer;
+    color:#333;
+}
+.page-nav button.active{
+    background:rgb(0,204,153);
+    color:#fff;
+    border-color:rgb(0,180,140);
+}
+.page-nav button:hover{transform:translateY(-1px)}
+
+/* ===== PROFIL ===== */
+.profile-container{
+    display:flex;
+    gap:30px;
+    flex-wrap:wrap;
+    align-items:flex-start;
+}
+.profile-card{
+    flex:1;
+    min-width:400px;
+    background:linear-gradient(135deg,rgb(245,250,255),rgb(240,248,255));
+    border:2px solid rgb(0,204,153);
+    border-radius:8px;
+    padding:20px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.1);
+}   
+.profile-card .profile-item{
+    display:flex;
+    align-items:center;
+    margin-bottom:12px;
+    padding:8px;
+    background:white;
+    border-radius:6px;
+    border-left:4px solid rgb(0,204,153);
+}
+.profile-card .profile-icon{
+    font-size:18px;
+    margin-right:10px;
+    width:30px;
+    text-align:center;
+}
+.profile-card .profile-label{
+    font-weight:bold;
+    color:rgb(58,123,213);
+    min-width:80px;
+    font-size:13px;
+}
+.profile-card .profile-value{
+    color:#333;
+    margin-left:8px;
+    font-size:13px;
+}
+.ipk-card{
+    flex:0 1 250px;
+    background:linear-gradient(135deg,rgb(76,175,80),rgb(56,142,60));
+    border-radius:8px;
+    padding:20px;
+    color:white;
+    box-shadow:0 4px 6px rgba(0,0,0,0.2);
+    text-align:center;
+}
+.ipk-card h3{
+    margin:0 0 15px 0;
+    font-size:14px;
+    opacity:0.9;
+}
+.ipk-semester{
+    margin-bottom:15px;
+    padding:12px;
+    background:rgba(255,255,255,0.1);
+    border-radius:6px;
+}
+.ipk-semester .sem-label{
+    font-size:12px;
+    opacity:0.8;
+}
+.ipk-semester .sem-value{
+    font-size:24px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+/* ===== SEMESTER ===== */
+.semester-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border:1px solid rgb(0,204,153);
+    background:rgb(245,250,255);
+    padding:12px 15px;
+    margin-bottom:12px;
+}
+.semester-row button{
+    background:rgb(0,204,153);
+    border:none;
+    color:white;
+    padding:6px 14px;
+    font-size:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="login">
+    <div class="login-box">
+        <h1>RIWAYAT STUDI</h1>
+
+        <label>Username</label>
+        <input type="text" id="username">
+
+        <label>Password</label>
+        <input type="password" id="password">
+
+        <button onclick="login()">LOGIN</button>
+    </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+    <div class="container">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <div class="user" id="userLabel">
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">
+                        👤
+                    </div>
+                    <div class="user-name" id="userName">Taufikurahman</div>
+                </div>
+            </div>
+
+            <div class="menu">
+                <button onclick="showPage('riwayat')">Riwayat Studi</button>
+                <button onclick="showPage('semester')">Semester</button>
+                <button onclick="showPage('laporan')">Laporan</button>
+                <button onclick="showPage('profil')">Profil</button>
+            </div>
+
+            <div class="logout">
+                <button onclick="logout()">LOGOUT</button>
+            </div>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- RIWAYAT -->
+            <div id="riwayat" class="page active">
+                <div class="header">RIWAYAT STUDI</div>
+                
+                <div style="padding:20px 40px">
+                    <div id="riwayatContent">
+                        <div style="margin-bottom:12px;font-weight:bold;color:#333">Profil Mahasiswa</div>
+                        <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+                            <div id="riwayatProfile" style="flex:1;min-width:300px;background:#fff;padding:12px;border:1px solid #e0e0e0;border-radius:6px">Loading profile...</div>
+                            <div style="width:240px;background:linear-gradient(135deg,rgb(76,175,80),rgb(56,142,60));padding:20px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,0.15);color:white">
+                                <div style="font-size:12px;opacity:0.9;margin-bottom:10px;font-weight:500">IPK KUMULATIF</div>
+                                <div id="riwayatIPK" style="font-size:36px;font-weight:bold;margin:8px 0">-</div>
+                                <div style="font-size:11px;opacity:0.8;margin-top:8px">Semua Semester</div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px">
+                            <div style="font-weight:bold;margin-bottom:8px">Daftar Mata Kuliah Semua Semester</div>
+                            <div id="riwayatCourses" style="background:#fff;padding:12px;border:1px solid #e0e0e0;border-radius:6px">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEMESTER -->
+            <div id="semester" class="page">
+                <div class="header">DAFTAR SEMESTER</div>
+                
+                <div style="padding:20px 40px">
+                    <div class="semester-row">
+                        <span>Semester 1</span>
+                        <button onclick="showSemesterDetail('sem1')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 2</span>
+                        <button onclick="showSemesterDetail('sem2')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 3</span>
+                        <button onclick="showSemesterDetail('sem3')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 4</span>
+                        <button onclick="alert('Detail Semester 4')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 5</span>
+                        <button onclick="alert('Detail Semester 5')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 6</span>
+                        <button onclick="alert('Detail Semester 6')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 7</span>
+                        <button onclick="alert('Detail Semester 7')">Lihat Detail</button>
+                    </div>
+                    <div class="semester-row">
+                        <span>Semester 8</span>
+                        <button onclick="alert('Detail Semester 8')">Lihat Detail</button>
+                    </div>
+                    
+                    <!-- Semester Details (hidden until requested) -->
+                    <div id="semester-details" style="display:none;padding:20px 40px">
+                        <div class="semester-detail" id="sem1" style="display:none">
+                            <div class="header">Semester 1</div>
+                            <div style="padding:12px;background:#fff;border:1px solid #e0e0e0;margin-top:12px">
+                                <table style="width:100%;border-collapse:collapse">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">No</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Kode MK</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Mata Kuliah</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">SKS</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai Angka</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Sem</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371708</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Olahraga</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371717</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Organisasi dan Arsitektur Komputer</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">E</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">0</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371970</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Pengantar Teknologi Informasi</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">9</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20373579</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Kalkulus</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">19</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">5</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20374801</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Pemrograman Dasar</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">D</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">6</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20375726</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Keimanan dan Kemanusiaan</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">6</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">7</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20375835</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Productive Skills of Foreign Languages for Specific Purpose</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">9</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10371729</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Pancasila</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">12</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px">9</td><td style="padding:6px">20370189</td><td style="padding:6px">Bahasa Indonesia</td><td style="padding:6px">2</td><td style="padding:6px">A</td><td style="padding:6px">8</td><td style="padding:6px">Ganjil</td><td style="padding:6px">2024</td></tr>
+                                    </tbody>
+                                </table>
+                                <div style="margin-top:12px">
+                                    <button onclick="hideSemesterDetail()" style="background:rgb(220,100,100);border:none;color:white;padding:8px 16px;font-size:13px;font-weight:bold;cursor:pointer;border-radius:6px">Kembali</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="semester-detail" id="sem2" style="display:none">
+                            <div class="header">Semester 2 </div>
+                            <div style="padding:12px;background:#fff;border:1px solid #e0e0e0;margin-top:12px">
+                                <table style="width:100%;border-collapse:collapse">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">No</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Kode MK</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Mata Kuliah</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">SKS</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai Angka</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Sem</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10371159</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Kewarganegaraan</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20375727</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ibadah dan Mu'amalah</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">54</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20375836</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">English Proficiency Test Preparation Course</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">E</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">0</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10370056</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Aljabar Linear dan Matriks</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">9</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">5</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371488</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Matematika Diskrit</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">6</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10372623</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Sistem Informasi</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">7</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">7</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10373674</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Penulisan Ilmiah</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20374574</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Logika dan Komputasi</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">D</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Genap</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2024</td></tr>
+                                        <tr><td style="padding:6px">9</td><td style="padding:6px">20374575</td><td style="padding:6px">Pemrograman Berorientasi Obyek</td><td style="padding:6px">3</td><td style="padding:6px">A</td><td style="padding:6px">15</td><td style="padding:6px">Genap</td><td style="padding:6px">2024</td></tr>
+                                    </tbody>
+                                </table>
+                                <div style="margin-top:12px">
+                                    <button onclick="hideSemesterDetail()" style="background:rgb(220,100,100);border:none;color:white;padding:8px 16px;font-size:13px;font-weight:bold;cursor:pointer;border-radius:6px">Kembali</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="semester-detail" id="sem3" style="display:none">
+                            <div class="header">Semester 3</div>
+                            <div style="padding:12px;background:#fff;border:1px solid #e0e0e0;margin-top:12px">
+                                <table style="width:100%;border-collapse:collapse">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">No</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Kode MK</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Mata Kuliah</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">SKS</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Nilai Angka</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Sem</th>
+                                            <th style="text-align:left;padding:6px;border-bottom:1px solid #ddd">Tahun</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371074</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Kemuhammadiyahan</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">1</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">8</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10371217</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Komunikasi Data</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10371578</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Metode Numerik</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">E</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">0</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">20371834</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Pemrograman Lanjut</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">64</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">5</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10372731</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Statistik dan Probabilitas</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">3</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">23</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">6</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10373673</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Teori Bahasa dan Otomata</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">4</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid #f0f0f0">7</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">10374884</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Algoritma Pemrograman</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">A</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">67</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">Ganjil</td><td style="padding:6px;border-bottom:1px solid #f0f0f0">2025</td></tr>
+                                        <tr><td style="padding:6px">8</td><td style="padding:6px">20374885</td><td style="padding:6px">Interaksi Manusia Komputer</td><td style="padding:6px">3</td><td style="padding:6px">A</td><td style="padding:6px">2</td><td style="padding:6px">Ganjil</td><td style="padding:6px">2025</td></tr>
+                                    </tbody>
+                                </table>
+                                <div style="margin-top:12px">
+                                    <button onclick="hideSemesterDetail()" style="background:rgb(220,100,100);border:none;color:white;padding:8px 16px;font-size:13px;font-weight:bold;cursor:pointer;border-radius:6px">Kembali</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LAPORAN -->
+            <div id="laporan" class="page">
+                <div class="header">LAPORAN RIWAYAT STUDI</div>
+                
+                <div style="padding:20px 40px">
+                    <div style="background:#fff3cd;border:1px solid #ffc107;padding:15px;border-radius:4px;margin-bottom:20px">
+                        <strong style="color:#856404">⚠️ Mata Kuliah yang Harus Diulang</strong>
+                        <p style="margin:10px 0 0 0;color:#856404">Berikut adalah mata kuliah dengan nilai E atau D yang perlu diulang:</p>
+                    </div>
+                    <div id="retakeList" style="padding:10px;background:#f8f9fa;border:1px solid #dee2e6;border-radius:4px">
+                        <div style="text-align:center;color:#666">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PROFIL -->
+            <div id="profil" class="page">
+                <div class="header">PROFIL MAHASISWA</div>
+                
+                <div style="padding:20px 40px">
+                    <div class="profile-container">
+                        <div class="profile-card">
+                            <div class="profile-item">
+                                <div class="profile-icon">👤</div>
+                                <div class="profile-label">Nama</div>
+                                <div class="profile-value" id="profileName" contenteditable="true">Taufikurahman</div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">🆔</div>
+                                <div class="profile-label">NIM</div>
+                                <div class="profile-value" id="profileNIM" contenteditable="true">202410370110103</div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">🏢</div>
+                                <div class="profile-label">Fakultas</div>
+                                <div class="profile-value" id="profileFakultas" contenteditable="true">Teknik</div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">📚</div>
+                                <div class="profile-label">Prodi</div>
+                                <div class="profile-value" id="profileProdi" contenteditable="true">Informatika</div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">📱</div>
+                                <div class="profile-label">No HP</div>
+                                <div class="profile-value" id="profileHP" contenteditable="true">085333146942</div>
+                            </div>
+                            <div class="profile-item">
+                                <div class="profile-icon">✉️</div>
+                                <div class="profile-label">Email</div>
+                                <div class="profile-value" id="profileEmail" contenteditable="true">taufikkurahman322@gmail.com</div>
+                            </div>
+                            <div class="profile-item" style="margin-bottom:0">
+                                <div class="profile-icon">🌐</div>
+                                <div class="profile-label">Webmail</div>
+                                <div class="profile-value" id="profileWebmail" contenteditable="true">taufikurahman@webmail.umm.ac.id</div>
+                            </div>
+                        </div>
+                        <div class="ipk-card">
+                            <h3>IPK KUMULATIF</h3>
+                            <div class="ipk-semester">
+                                <div class="sem-label">Total Semua Semester</div>
+                                <div class="sem-value" id="ipkTotal">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="margin-top:12px;display:flex;gap:8px">
+                        <button onclick="saveProfile()" style="padding:10px 14px;background:rgb(0,123,255);color:#fff;border:none;border-radius:6px;cursor:pointer">Simpan Profil</button>
+                        <button onclick="loadProfileData()" style="padding:10px 14px;background:rgb(108,117,125);color:#fff;border:none;border-radius:6px;cursor:pointer">Muat Profil</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+function login(){
+    const u=document.getElementById("username").value;
+    const p=document.getElementById("password").value;
+
+    if(u==="admin" && p==="admin123"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("dashboard").style.display="block";
+        document.getElementById("userName").innerText=u;
+        loadProfilePhoto();
+        loadProfileData();
+        // render Riwayat Studi langsung setelah login
+        renderRiwayat();
+    }else{
+        alert("Username / Password salah!");
+    }
+}
+
+function logout(){
+    document.getElementById("dashboard").style.display="none";
+    document.getElementById("login").style.display="flex";
+}
+
+function showPage(id){
+    document.querySelectorAll(".page")
+        .forEach(p=>p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    if(id==="laporan"){
+        loadRetakeCourses();
+    }
+    if(id==="profil"){
+        loadIPK();
+    }
+}
+
+function loadRetakeCourses(){
+    const semester1=extractCourses('sem1');
+    const semester2=extractCourses('sem2');
+    const semester3=extractCourses('sem3');
+    const allRetake=[...semester1,...semester2,...semester3].filter(c=>c.nilai==='E'||c.nilai==='D');
+    
+    const container=document.getElementById('retakeList');
+    if(allRetake.length===0){
+        container.innerHTML='<div style="padding:20px;text-align:center;color:#28a745"><strong>✓ Tidak ada mata kuliah yang harus diulang</strong></div>';
+        return;
+    }
+    
+    let html='<table style="width:100%;border-collapse:collapse">';
+    html+='<thead><tr style="background:#f0f0f0"><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">Semester</th><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">Kode MK</th><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">Mata Kuliah</th><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">SKS</th><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">Nilai</th><th style="text-align:left;padding:10px;border-bottom:2px solid #dee2e6">Status</th></tr></thead><tbody>';
+    
+    allRetake.forEach((c,i)=>{
+        const status=c.nilai==='E'?'❌ Gagal':'⚠️ Kurang Memuaskan';
+        const bgColor=i%2===0?'#fff':'#f9f9f9';
+        html+=`<tr style="background:${bgColor}"><td style="padding:10px;border-bottom:1px solid #e0e0e0">${c.semester}</td><td style="padding:10px;border-bottom:1px solid #e0e0e0">${c.kode}</td><td style="padding:10px;border-bottom:1px solid #e0e0e0">${c.nama}</td><td style="padding:10px;border-bottom:1px solid #e0e0e0;text-align:center">${c.sks}</td><td style="padding:10px;border-bottom:1px solid #e0e0e0;font-weight:bold;color:${c.nilai==='E'?'#dc3545':'#fd7e14'}">${c.nilai}</td><td style="padding:10px;border-bottom:1px solid #e0e0e0;color:${c.nilai==='E'?'#dc3545':'#fd7e14'}">${status}</td></tr>`;
+    });
+    
+    html+='</tbody></table>';
+    container.innerHTML=html;
+}
+
+function extractCourses(semesterId){
+    const table=document.querySelector(`#${semesterId} table tbody`);
+    if(!table) return [];
+    const rows=table.querySelectorAll('tr');
+    const courses=[];
+    const semMap={'sem1':'1','sem2':'2','sem3':'3'};
+    const gradeMap={'A':4.0,'B':3.0,'C':2.0,'D':1.0,'E':0.0};
+    
+    rows.forEach(row=>{
+        const tds=row.querySelectorAll('td');
+        if(tds.length>=5){
+            courses.push({
+                semester:semMap[semesterId],
+                kode:tds[1].textContent.trim(),
+                nama:tds[2].textContent.trim(),
+                sks:tds[3].textContent.trim(),
+                nilai:tds[4].textContent.trim(),
+                nilaiAngka: gradeMap[tds[4].textContent.trim()]!==undefined ? gradeMap[tds[4].textContent.trim()] : null,
+                semText: (tds[6] && tds[6].textContent) ? tds[6].textContent.trim() : '',
+                tahun: (tds[7] && tds[7].textContent) ? tds[7].textContent.trim() : ''
+            });
+        }
+    });
+    return courses;
+}
+
+function showSemesterDetail(id){
+    const container=document.getElementById('semester-details');
+    if(!container) return;
+    container.style.display='block';
+    document.querySelectorAll('.semester-detail').forEach(d=>d.style.display='none');
+    const el=document.getElementById(id);
+    if(el){
+        el.style.display='block';
+        el.scrollIntoView({behavior:'smooth'});
+    }
+}
+
+function hideSemesterDetail(){
+    const container=document.getElementById('semester-details');
+    if(container) container.style.display='none';
+    document.querySelectorAll('.semester-detail').forEach(d=>d.style.display='none');
+}
+
+function loadIPK(){
+    const gradeMap={'A':4.0,'B':3.0,'C':2.0,'D':1.0,'E':0.0};
+    let totalNilaiKumulatif=0;
+    let totalSKSKumulatif=0;
+    
+    for(let i=1;i<=3;i++){
+        const semId=`sem${i}`;
+        const table=document.querySelector(`#${semId} table tbody`);
+        if(!table) continue;
+        
+        const rows=table.querySelectorAll('tr');
+        rows.forEach(row=>{
+            const tds=row.querySelectorAll('td');
+            if(tds.length>=5){
+                const sks=parseInt(tds[3].textContent.trim())||0;
+                const nilai=tds[4].textContent.trim();
+                const nilaiAngka=gradeMap[nilai]||0;
+                totalNilaiKumulatif+=nilaiAngka*sks;
+                totalSKSKumulatif+=sks;
+            }
+        });
+    }
+    
+    const ipkKumulatif=totalSKSKumulatif>0?(totalNilaiKumulatif/totalSKSKumulatif).toFixed(2):'0.00';
+    const ipkEl=document.getElementById('ipkTotal');
+    if(ipkEl) ipkEl.textContent=ipkKumulatif;
+}
+
+function showPage(id){
+    document.querySelectorAll(".page")
+        .forEach(p=>p.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    if(id==="laporan"){
+        loadRetakeCourses();
+    }
+    if(id==="profil"){
+        loadIPK();
+    }
+    if(id==="riwayat"){
+        renderRiwayat();
+    }
+    // update in-page nav active states
+    document.querySelectorAll('.page-nav').forEach(nav=>{
+        nav.querySelectorAll('button').forEach(btn=>btn.classList.remove('active'));
+        const activeBtn = nav.querySelector(`#nav-${id}`) || nav.querySelector(`#nav${nav.dataset.suffix || ''}-${id}`) || nav.querySelector(`#nav-${id.split('-')[0]}`);
+        // fallback: match by id containing page name
+        const byId = nav.querySelector(`[id*="-${id}"]`);
+        if(byId) byId.classList.add('active');
+        const direct = nav.querySelector(`#nav-${id}`);
+        if(direct) direct.classList.add('active');
+        // also try nav2-, nav3-, nav4- variants
+        ['nav2-','nav3-','nav4-'].forEach(pref=>{ const b=nav.querySelector(`#${pref}${id}`); if(b) b.classList.add('active'); });
+    });
+}
+
+function computeCumulativeIPK(){
+    const gradeMap={'A':4.0,'B':3.0,'C':2.0,'D':1.0,'E':0.0};
+    let totalNilai=0;
+    let totalSKS=0;
+    for(let i=1;i<=3;i++){
+        const semId=`sem${i}`;
+        const table=document.querySelector(`#${semId} table tbody`);
+        if(!table) continue;
+        const rows=table.querySelectorAll('tr');
+        rows.forEach(row=>{
+            const tds=row.querySelectorAll('td');
+            if(tds.length>=5){
+                const sks=parseInt(tds[3].textContent.trim())||0;
+                const nilai=tds[4].textContent.trim();
+                const nilaiAngka=gradeMap[nilai]||0;
+                totalNilai+=nilaiAngka*sks;
+                totalSKS+=sks;
+            }
+        });
+    }
+    return totalSKS>0?((totalNilai/totalSKS).toFixed(2)):'0.00';
+}
+
+function renderRiwayat(){
+    const getText=(id)=>{
+        const el=document.getElementById(id);
+        if(!el) return '';
+        // remove leading ':' if present
+        return el.textContent.replace(/^\s*:\s*/,'').trim();
+    };
+    const profileFields=[
+        {k:'Nama',v:getText('profileName')},
+        {k:'NIM',v:getText('profileNIM')},
+        {k:'Fakultas',v:getText('profileFakultas')},
+        {k:'Prodi',v:getText('profileProdi')},
+        {k:'No HP',v:getText('profileHP')},
+        {k:'Email',v:getText('profileEmail')},
+        {k:'Webmail',v:getText('profileWebmail')}
+    ];
+    const profileContainer=document.getElementById('riwayatProfile');
+    if(profileContainer){
+        const photoData=localStorage.getItem('profilePhoto');
+        let leftCol='';
+        if(photoData){
+            leftCol=`<div style="width:96px;height:96px;border-radius:8px;overflow:hidden"><img src="${photoData}" style="width:100%;height:100%;object-fit:cover" alt="avatar"></div>`;
+        } else {
+            leftCol=`<div style="width:96px;height:96px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:#f1f1f1;color:#666;font-size:36px">👤</div>`;
+        }
+
+        let rightCol='<div style="display:flex;flex-direction:column;gap:6px">';
+        profileFields.forEach(f=>{
+            rightCol+=`<div style="display:flex;gap:8px"><div style="min-width:90px;font-weight:600;color:#3a7bd5">${f.k}</div><div>${f.v}</div></div>`;
+        });
+        rightCol+='</div>';
+
+        profileContainer.innerHTML=`<div style="display:flex;gap:12px;align-items:center">${leftCol}${rightCol}</div>`;
+    }
+    const ipk=computeCumulativeIPK();
+    const ipkEl=document.getElementById('riwayatIPK');
+    if(ipkEl) ipkEl.textContent=ipk;
+
+    // get all courses from 3 semesters
+    const sems=['sem1','sem2','sem3'];
+    let all=[];
+    sems.forEach(s=>{ all=all.concat(extractCourses(s)); });
+
+    // compute totals
+    let totalSKS=0; let totalCourses=all.length;
+    all.forEach(c=>{ totalSKS+=parseInt(c.sks)||0; });
+
+    // show summary below IPK
+    const ipkContainer=document.getElementById('riwayatIPK');
+    if(ipkContainer){
+        // remove old summary if exists
+        const oldSummary=ipkContainer.nextElementSibling;
+        if(oldSummary && oldSummary.style.fontSize==='12px'){
+            oldSummary.remove();
+        }
+        const summary=`<div style="font-size:12px;color:#666;margin-top:6px">Total Mata Kuliah: ${totalCourses} · Total SKS: ${totalSKS}</div>`;
+        ipkContainer.insertAdjacentHTML('afterend',summary);
+    }
+
+    const coursesEl=document.getElementById('riwayatCourses');
+    if(!coursesEl) return;
+    if(all.length===0){ coursesEl.innerHTML='<div style="padding:12px;text-align:center;color:#666">Tidak ada data mata kuliah</div>'; return; }
+    
+    let html='<div style="margin-bottom:20px"><div style="font-weight:bold;margin-bottom:10px;font-size:14px">Daftar Mata Kuliah yang Ditempuh</div><table style="width:100%;border-collapse:collapse"><thead><tr style="background:#e8f4f8;border-bottom:2px solid #bbb"><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">No</th><th style="text-align:left;padding:10px;font-size:13px;font-weight:600">Kode MK</th><th style="text-align:left;padding:10px;font-size:13px;font-weight:600">Mata Kuliah</th><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">SKS</th><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">Nilai</th><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">Nilai Angka</th><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">Sem</th><th style="text-align:center;padding:10px;font-size:13px;font-weight:600">Tahun</th></tr></thead><tbody>';
+    all.forEach((c,i)=>{
+        const bg=i%2===0?'#fff':'#f9f9f9';
+        const semLabel = c.semText ? `${c.semText}` : `${c.semester}`;
+        const nilaiAngka = (c.nilaiAngka!==null && c.nilaiAngka!==undefined) ? c.nilaiAngka : '-';
+        html+=`<tr style="background:${bg};border-bottom:1px solid #ddd"><td style="text-align:center;padding:10px;font-size:13px">${i+1}</td><td style="text-align:left;padding:10px;font-size:13px">${c.kode}</td><td style="text-align:left;padding:10px;font-size:13px">${c.nama}</td><td style="text-align:center;padding:10px;font-size:13px">${c.sks}</td><td style="text-align:center;padding:10px;font-size:13px">${c.nilai}</td><td style="text-align:center;padding:10px;font-size:13px">${nilaiAngka}</td><td style="text-align:center;padding:10px;font-size:13px">${semLabel}</td><td style="text-align:center;padding:10px;font-size:13px">${c.tahun||'-'}</td></tr>`;
+    });
+    html+='</tbody></table></div>';
+    coursesEl.innerHTML = html;
+}
+
+function uploadProfilePhoto(event){
+    const file=event.target.files[0];
+    if(!file) return;
+    
+    const reader=new FileReader();
+    reader.onload=function(e){
+        const photoData=e.target.result;
+        localStorage.setItem('profilePhoto',photoData);
+        displayProfilePhoto(photoData);
+    };
+    reader.readAsDataURL(file);
+}
+
+function loadProfilePhoto(){
+    const photoData=localStorage.getItem('profilePhoto');
+    if(photoData){
+        displayProfilePhoto(photoData);
+    }
+}
+
+function displayProfilePhoto(photoData){
+    const avatar=document.getElementById('userAvatar');
+    avatar.innerHTML=`<img src="${photoData}" alt="Foto Profil">`;
+}
+
+function saveProfile(){
+    const profile={
+        name:document.getElementById('profileName')?.textContent.trim()||'',
+        nim:document.getElementById('profileNIM')?.textContent.trim()||'',
+        fakultas:document.getElementById('profileFakultas')?.textContent.trim()||'',
+        prodi:document.getElementById('profileProdi')?.textContent.trim()||'',
+        hp:document.getElementById('profileHP')?.textContent.trim()||'',
+        email:document.getElementById('profileEmail')?.textContent.trim()||'',
+        webmail:document.getElementById('profileWebmail')?.textContent.trim()||''
+    };
+    localStorage.setItem('profileData',JSON.stringify(profile));
+    // update sidebar name
+    const uname=document.getElementById('userName');
+    if(uname) uname.innerText=profile.name||uname.innerText;
+    // refresh Riwayat
+    try{ renderRiwayat(); }catch(e){}
+    alert('Profil disimpan.');
+}
+
+function loadProfileData(){
+    const raw=localStorage.getItem('profileData');
+    if(!raw) return;
+    try{
+        const p=JSON.parse(raw);
+        if(p.name) document.getElementById('profileName').textContent=p.name;
+        if(p.nim) document.getElementById('profileNIM').textContent=p.nim;
+        if(p.fakultas) document.getElementById('profileFakultas').textContent=p.fakultas;
+        if(p.prodi) document.getElementById('profileProdi').textContent=p.prodi;
+        if(p.hp) document.getElementById('profileHP').textContent=p.hp;
+        if(p.email) document.getElementById('profileEmail').textContent=p.email;
+        if(p.webmail) document.getElementById('profileWebmail').textContent=p.webmail;
+        // sync sidebar
+        const uname=document.getElementById('userName');
+        if(uname && p.name) uname.innerText=p.name;
+        try{ renderRiwayat(); }catch(e){}
+    }catch(e){
+        console.error('Failed to load profile',e);
+    }
+}
+
+// load profile on initial dashboard show (if any)
+document.addEventListener('DOMContentLoaded',()=>{
+    // if user already logged in (dashboard visible) load profile and photo
+    loadProfileData();
+    loadProfilePhoto();
+});
+</script>
+
+</body>
+</html>
